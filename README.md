@@ -1,7 +1,7 @@
 # 笔尖 AI 小说生成工作台 · 测试项目
 
 基于真实项目 **Novel Workbench**（Spring Boot + React 的 AI 小说写作平台）设计的测试工程，
-用于面试测试开发岗时展示「测试设计 + 自动化 + 安全/数据质量专项」能力。
+覆盖接口、安全/越权、AI 应用、数据质量与性能自动化，以及 Web UI 端到端测试。
 
 ## 目录结构
 
@@ -11,7 +11,6 @@ novel-workbench-test/
 ├── conftest.py                    # pytest 夹具：用户/作品/双用户隔离上下文
 ├── pytest.ini                     # pytest 配置（输出自包含 HTML 报告）
 ├── 测试用例设计.md                 # 测试策略 + 7 大模块详细用例表 + 缺陷示例 + 度量
-├── 简历项目经验.md                 # 可直接粘贴进简历的项目经验文案
 └── tests/
     ├── test_auth_api.py           # 模块A 认证与参数校验（11 用例）
     ├── test_book_api.py           # 模块B 作品 CRUD（7 用例）
@@ -46,13 +45,13 @@ pytest tests/ui/test_ui_flows.py --html=ui_report.html --self-contained-html
 - 无 LLM Key 时系统走 mock 兜底：AI 生成接口每调用落 1 个节点、数量被钳制在 [1,10]，AI 专项用例验证**结构约束**（节点类型/父子归属/卷号接续/归属本书）；内容级一致性需配置 LLM Key 后验证。
 - 接口/安全/数据质量/AI/性能共 **48 条用例已在本机实跑通过（48/48）**，报告见 `report.html`；UI 端到端 8 场景已在本机实跑通过（**8/8，13s**，Playwright，覆盖登录/注册/建书/大纲/协作），报告见 `ui_report.html`。
 - **UI 用例已针对 antd 中文间距加固**：antd 会在相邻中文字符间插入空格（如「创建账号」→「创 建 账 号」），原精确文本定位会失配；现统一用「容忍空格的正则匹配」（`_btn`/`_txt`/`text=/.../`）定位，从根上消除误报。已在本机三服务齐跑环境实跑验证通过（8/8）。
-- **UI 实跑说明**：浏览器自动化在本机被标记为敏感操作，需在本机执行并人工批准。运行前请确认三服务已起，并指定 Chromium 自定义路径（本机装在 `C:/Users/Yilia/pw-browsers`）：
+- **UI 实跑说明**：浏览器自动化在本机被标记为敏感操作，需在本机执行并人工批准。运行前请确认三服务已起，并指定 Chromium 自定义路径：
   ```bash
-  set PLAYWRIGHT_BROWSERS_PATH=C:\Users\Yilia\pw-browsers
+  set PLAYWRIGHT_BROWSERS_PATH=<你的 Playwright 浏览器目录>
   pytest tests/ui/test_ui_flows.py --html=ui_report.html --self-contained-html -v
   ```
 
-## 设计亮点（面试可讲）
+## 设计亮点
 
 - **异常响应约定**：业务异常返回 HTTP 200 + body.code，断言看 code 而非状态码（易踩坑点）。
 - **多租户越权（IDOR）**：以 Book 为权限主体，覆盖读/删/写越权与角色矩阵（OWNER/EDITOR/REVIEWER/VIEWER）。
