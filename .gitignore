@@ -1,0 +1,26 @@
+# ===== Python 缓存 / 字节码 =====
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+.eggs/
+
+# ===== 日志 =====
+*.log
+
+# ===== 操作系统 / 编辑器 =====
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# ===== 密钥 / 本地环境（本项目不入库任何凭据；此处仅作安全兜底） =====
+.env
+.env.*
+*.key
+*.pem
+*.pfx
+
+# ===== Playwright 浏览器（安装在仓库外，见 README） =====
+pw-browsers/

@@ -1,0 +1,17 @@
+# novel-workbench 测试项目依赖
+# 接口/安全/数据质量/AI/性能用例仅依赖 pytest（接口调用用标准库 urllib，零三方依赖）
+pytest>=8.0
+
+# HTML 自包含测试报告（pytest-html，生成 report.html / ui_report.html）
+pytest-html>=4.1
+
+# 失败用例自动重跑（可选，CI 友好）
+pytest-rerunfailures>=12.0
+
+# UI 端到端用例（Playwright 同步 API）
+playwright>=1.40
+
+# 安装后还需下载浏览器内核（项目安装在仓库外，避免入库）：
+#   pip install -r requirements.txt
+#   playwright install chromium
+#   set PLAYWRIGHT_BROWSERS_PATH=<你的浏览器目录>
